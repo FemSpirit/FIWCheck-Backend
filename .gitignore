@@ -29,4 +29,4 @@ replay_pid*
 # VS Code Ordner
 .vscode/
 
-.DS_Store/
+.DS_Store
