@@ -11,3 +11,5 @@ Laura Anter - s0596415
 Oromia Natalie Bakar -s0596577
 
 Jessi Tra Mi Hoang - JessiHoang
+
+Annika Schwarz - annika-schwarz
