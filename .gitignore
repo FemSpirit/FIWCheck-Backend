@@ -30,3 +30,9 @@ replay_pid*
 .vscode/
 
 .DS_Store
+
+### DB Zugangsdaten ###
+/src/main/resources/application-local.properties
+
+# Maven build output
+target/
