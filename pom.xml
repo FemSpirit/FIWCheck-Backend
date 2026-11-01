@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>FemSpirit</groupId>
-	<artifactId>FIWCheckerBackend</artifactId>
+	<artifactId>FIWCheckBackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
