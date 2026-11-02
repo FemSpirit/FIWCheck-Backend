@@ -12,11 +12,11 @@ public class ModulVoraussetzung {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "modul_id", nullable = false)
-    private StupoModul modul;
+    private Modul modul;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "voraussetzung_modul_id", nullable = false)
-    private StupoModul voraussetzung;
+    private Modul voraussetzung;
 
     @Column(length = 20, nullable = false)
     private String voraussetzungstyp;

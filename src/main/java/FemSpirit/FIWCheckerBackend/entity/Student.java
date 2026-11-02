@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "student")
-public class Student extends Nutzer {
+public class Student extends User {
     @Column
     private LocalDateTime letzterLogin;
 

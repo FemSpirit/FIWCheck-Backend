@@ -3,7 +3,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "stupo_modul")
-public class StupoModul {
+public class Modul {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,7 @@ public class StupoModul {
     @Column(nullable = false)
     private Boolean zeugnisrelevant;
 
-    public StupoModul() {
+    public Modul() {
     }
 
     public Long getStupoModulId() {

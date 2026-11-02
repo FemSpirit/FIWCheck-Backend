@@ -2,9 +2,9 @@ package FemSpirit.FIWCheckerBackend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "dozent")
-public class Dozent extends Nutzer {
+@Table(name = "lecturer")
+public class Lecturer extends User {
 
-    public Dozent() {
+    public Lecturer() {
     }
 }

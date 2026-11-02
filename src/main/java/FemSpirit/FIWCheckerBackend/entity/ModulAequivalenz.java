@@ -10,11 +10,11 @@ public class ModulAequivalenz {
 
     @OneToOne(optional = false)
     @JoinColumn(name = "modul_id_alt", nullable = false)
-    private StupoModul modulAlt;
+    private Modul modulAlt;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "modul_id_neu", nullable = false)
-    private StupoModul modulNeu;
+    private Modul modulNeu;
 
     public ModulAequivalenz() {
     }
@@ -27,19 +27,19 @@ public class ModulAequivalenz {
         this.aequivalenzId = aequivalenzId;
     }
 
-    public StupoModul getModulAlt() {
+    public Modul getModulAlt() {
         return modulAlt;
     }
 
-    public void setModulAlt(StupoModul modulAlt) {
+    public void setModulAlt(Modul modulAlt) {
         this.modulAlt = modulAlt;
     }
 
-    public StupoModul getModulNeu() {
+    public Modul getModulNeu() {
         return modulNeu;
     }
 
-    public void setModulNeu(StupoModul modulNeu) {
+    public void setModulNeu(Modul modulNeu) {
         this.modulNeu = modulNeu;
     }
 }

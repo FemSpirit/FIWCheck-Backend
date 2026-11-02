@@ -2,13 +2,13 @@ package FemSpirit.FIWCheckerBackend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "nutzer")
+@Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Nutzer {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long nutzerId;
+    private Long userId;
 
     @Column(length = 20, nullable = false)
     private String name;
@@ -17,21 +17,21 @@ public class Nutzer {
     private String email;
 
     @Column(length = 255, nullable = false)
-    private String passwort;
+    private String password;
 
     @ManyToOne
-    @JoinColumn(name = "rolle_id")
-    private Rolle rolle;
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    public Nutzer() {
+    public User() {
     }
 
-    public Long getNutzerId() {
-        return nutzerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setNutzerId(Long nutzerId) {
-        this.nutzerId = nutzerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -50,19 +50,19 @@ public class Nutzer {
         this.email = email;
     }
 
-    public String getPasswort() {
-        return passwort;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswort(String passwort) {
-        this.passwort = passwort;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Rolle getRolle() {
-        return rolle;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRolle(Rolle rolle) {
-        this.rolle = rolle;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

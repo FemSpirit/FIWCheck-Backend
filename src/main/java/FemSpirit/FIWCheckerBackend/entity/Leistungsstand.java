@@ -17,8 +17,8 @@ public class Leistungsstand {
     private Student student;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "stupo_modul_id", nullable = false)
-    private StupoModul stupoModul;
+    @JoinColumn(name = "modul_id", nullable = false)
+    private Modul modul;
 
     @Column(length = 20, nullable = false)
     private String status;
@@ -48,12 +48,12 @@ public class Leistungsstand {
         this.student = student;
     }
 
-    public StupoModul getStupoModul() {
-        return stupoModul;
+    public Modul getModul() {
+        return modul;
     }
 
-    public void setStupoModul(StupoModul stupoModul) {
-        this.stupoModul = stupoModul;
+    public void setModul(Modul modul) {
+        this.modul = modul;
     }
 
     public String getStatus() {
