@@ -2,12 +2,12 @@ package FemSpirit.FIWCheckerBackend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "stupo_modul")
+@Table(name = "modul")
 public class Modul {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long stupoModulId;
+    private Long ModulId;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "stupo_id", nullable = false)
@@ -44,12 +44,12 @@ public class Modul {
     public Modul() {
     }
 
-    public Long getStupoModulId() {
-        return stupoModulId;
+    public Long getModulId() {
+        return ModulId;
     }
 
-    public void setStupoModulId(Long stupoModulId) {
-        this.stupoModulId = stupoModulId;
+    public void setModulId(Long ModulId) {
+        this.ModulId = ModulId;
     }
 
     public Stupo getStupo() {
