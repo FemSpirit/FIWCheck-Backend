@@ -36,3 +36,5 @@ replay_pid*
 
 # Maven build output
 target/
+.postman/
+postman/
