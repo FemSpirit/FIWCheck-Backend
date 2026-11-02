@@ -2,12 +2,12 @@ package FemSpirit.FIWCheckerBackend.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "rolle")
+@Table(name = "role")
 public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rolleId;
+    private Long roleId;
 
     @Column(length = 20, nullable = false)
     private String bezeichnung;
@@ -15,12 +15,12 @@ public class Role {
     public Role() {
     }
 
-    public Long getRolleId() {
-        return rolleId;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRolleId(Long rolleId) {
-        this.rolleId = rolleId;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getBezeichnung() {
