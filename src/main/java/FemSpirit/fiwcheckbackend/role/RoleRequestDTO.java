@@ -1,4 +1,5 @@
 package FemSpirit.fiwcheckbackend.role;
 
-public record RoleRequestDTO() {
+public record RoleRequestDTO(String name)
+{
 }
