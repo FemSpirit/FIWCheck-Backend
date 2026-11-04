@@ -4,7 +4,10 @@ import FemSpirit.fiwcheckbackend.role.dto.RoleRequestDTO;
 import FemSpirit.fiwcheckbackend.role.dto.RoleResponseDTO;
 import FemSpirit.fiwcheckbackend.role.entity.Role;
 import FemSpirit.fiwcheckbackend.role.repository.RoleRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @Service
@@ -34,8 +37,15 @@ public class RoleService {
 
     public RoleResponseDTO getRoleById(Long id) {
         Role role = roleRepository.findById(id)
-                .orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(
-                        org.springframework.http.HttpStatus.NOT_FOUND, "Rolle nicht gefunden"));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Rolle nicht gefunden"));
         return toResponse(role);
+    }
+
+    public void deleteRole(Long id) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Rolle nicht gefunden"));
+        roleRepository.delete(role);
     }
 }
