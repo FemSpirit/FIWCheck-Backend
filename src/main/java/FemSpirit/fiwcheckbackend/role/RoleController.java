@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +41,12 @@ public class RoleController {
     public ResponseEntity<RoleResponseDTO> create(@RequestBody RoleRequestDTO request) {
         RoleResponseDTO created = roleService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    //DELETE /role/{id} -> Rolle löschenoder 404 Not Found
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRole(@PathVariable Long id){
+        roleService.deleteRole(id);
+        return ResponseEntity.noContent().build();
     }
 }
