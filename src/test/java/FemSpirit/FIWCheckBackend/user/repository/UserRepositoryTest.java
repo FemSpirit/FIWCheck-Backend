@@ -34,7 +34,7 @@ class UserRepositoryTest {
         entityManager.persistAndFlush(testRole);
 
         testUser = new User();
-        testUser.setUsername("testuser");
+        testUser.setName("testuser");
         testUser.setEmail("test@example.com");
         testUser.setPassword("password123");
         testUser.setRole(testRole);
@@ -63,7 +63,7 @@ class UserRepositoryTest {
         entityManager.persistAndFlush(testUser);
 
         User secondUser = new User();
-        secondUser.setUsername("seconduser");
+        secondUser.setName("seconduser");
         secondUser.setEmail("test@example.com");
         secondUser.setPassword("password456");
 
@@ -109,14 +109,14 @@ class UserRepositoryTest {
         User savedUser = entityManager.persistAndFlush(testUser);
 
         // Act
-        savedUser.setUsername("updateduser");
+        savedUser.setName("updateduser");
         userRepository.saveAndFlush(savedUser);
 
         // Assert
         assertThat(userRepository.findById(savedUser.getUserId()))
                 .isPresent()
                 .get()
-                .extracting(User::getUsername)
+                .extracting(User::getName)
                 .isEqualTo("updateduser");
     }
 
