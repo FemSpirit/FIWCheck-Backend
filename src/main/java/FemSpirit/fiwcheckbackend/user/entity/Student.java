@@ -10,17 +10,23 @@ public class Student extends User {
     @Column
     private LocalDateTime letzterLogin;
 
-    @Column(nullable = false)
+    /*
+     * vollzeit, studiumBeginn, aweVariante und stupo waren ursprünglich Pflichtfelder ( nullable = false) ,
+     * werden aber bei der Registrierung nicht abgefragt.
+     * Sie können daher zunächst null sein und werden später bei der Profilvervollständigung ergänzt.
+     * Deshalb wird nullable=true
+     */
+    @Column(nullable = true)
     private Boolean vollzeit;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer studiumBeginn;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 10, nullable = true)
     private String aweVariante;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "stupo_id", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "stupo_id", nullable = true)
     private Stupo stupo;
 
     public Student() {
