@@ -2,11 +2,16 @@ package FemSpirit.fiwcheckbackend.user.service;
 
 import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import FemSpirit.fiwcheckbackend.role.repository.RoleRepository;
 import FemSpirit.fiwcheckbackend.role.entity.Role;
 import FemSpirit.fiwcheckbackend.user.dto.*;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
+import FemSpirit.fiwcheckbackend.user.entity.User;
 
 
 @Service
@@ -66,6 +71,29 @@ public class UserService {
                 gespeicherterStudent.getName(),
                 gespeicherterStudent.getEmail()
         );
+    }
+
+    // 1. Einzelnen User anhand der ID abrufen
+    public UserResponseDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User mit der ID " + id + " wurde nicht gefunden."));
+
+        return new UserResponseDTO(
+                user.getUserId(),
+                user.getName(),
+                user.getEmail()
+        );
+    }
+
+    // 2. Alle User abrufen
+    public List<UserResponseDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserResponseDTO(
+                        user.getUserId(),
+                        user.getName(),
+                        user.getEmail()
+                ))
+                .collect(Collectors.toList());
     }
 
 

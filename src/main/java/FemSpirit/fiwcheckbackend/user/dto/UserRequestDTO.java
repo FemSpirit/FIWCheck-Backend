@@ -3,7 +3,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record UserRequestDTO(
-
         @NotBlank(message = "Der Name darf nicht leer sein.")
         String name,
 
@@ -13,6 +12,7 @@ public record UserRequestDTO(
 
         @NotBlank(message = "Das Passwort darf nicht leer sein.")
         String password
+)
 
-) {
+{
 }
