@@ -1,5 +1,6 @@
-package FemSpirit.FIWCheckBackend;
+package FemSpirit.FIWCheckBackend.modul;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,11 +10,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Disabled ("kann aktiviert werden, wenn DB & Tabellen korrekt angebunden / aufgesetzt sind")
 //sagt Spring, dass für den Test die echte Umgebung der Anwendung simuliert wird (Application Context)
 @SpringBootTest
 //sorgt dafür, dass Spring im Hintergrund einen Test-Client, mit dem HTTP-Anfragen an den Controller geschickt werden können, einrichten kann
 @AutoConfigureMockMvc
-public class ModuleControllerTest
+public class ModulIntegrationTest
 {
     //in der Variable mockMvc wird Test-Client gespeichert (Mock=simulieren, MCV=Model-View-Controller)
     @Autowired
