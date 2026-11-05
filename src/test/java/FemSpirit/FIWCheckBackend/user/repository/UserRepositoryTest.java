@@ -72,4 +72,66 @@ class UserRepositoryTest {
             entityManager.persistAndFlush(secondUser);
         }).isInstanceOf(ConstraintViolationException.class);
     }
+
+    //CRUD Methoden Tests
+    // Test 3: User speichern
+    @Test
+    void shouldSaveUser() {
+
+        // Act
+        User savedUser = userRepository.save(testUser);
+
+        // Assert
+        assertThat(savedUser.getUserId()).isNotNull();
+        assertThat(savedUser.getEmail()).isEqualTo("test@example.com");
+    }
+
+    // Test 4: User anhand der ID finden
+    @Test
+    void shouldFindUserById() {
+
+        // Arrange
+        User savedUser = entityManager.persistAndFlush(testUser);
+
+        // Act
+        var result = userRepository.findById(savedUser.getUserId());
+
+        // Assert
+        assertThat(result).isPresent();
+        assertThat(result.get().getEmail()).isEqualTo("test@example.com");
+    }
+
+    // Test 5: User ändern
+    @Test
+    void shouldUpdateUser() {
+
+        // Arrange
+        User savedUser = entityManager.persistAndFlush(testUser);
+
+        // Act
+        savedUser.setUsername("updateduser");
+        userRepository.saveAndFlush(savedUser);
+
+        // Assert
+        assertThat(userRepository.findById(savedUser.getUserId()))
+                .isPresent()
+                .get()
+                .extracting(User::getUsername)
+                .isEqualTo("updateduser");
+    }
+
+    // Test 6: User löschen
+    @Test
+    void shouldDeleteUser() {
+
+        // Arrange
+        User savedUser = entityManager.persistAndFlush(testUser);
+        Long userId = savedUser.getUserId();
+
+        // Act
+        userRepository.deleteById(userId);
+
+        // Assert
+        assertThat(userRepository.findById(userId)).isEmpty();
+    }
 }
