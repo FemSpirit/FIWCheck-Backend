@@ -13,7 +13,7 @@ public class User {
     private Long userId;
 
     @Column(length = 20, nullable = false)
-    private String name;
+    private String username;
 
     @Column(length = 50, nullable = false, unique = true)
     private String email;
@@ -36,12 +36,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
