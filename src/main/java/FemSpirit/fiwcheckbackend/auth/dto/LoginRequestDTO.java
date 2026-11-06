@@ -1,4 +1,4 @@
-package FemSpirit.fiwcheckbackend.user.dto;
+package FemSpirit.fiwcheckbackend.auth.dto;
 
 public class LoginRequestDTO {
     private String email;
