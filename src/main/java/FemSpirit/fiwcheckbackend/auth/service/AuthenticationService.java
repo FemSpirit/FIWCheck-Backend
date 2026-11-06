@@ -1,10 +1,10 @@
 package FemSpirit.fiwcheckbackend.user.service;
 
-import FemSpirit.fiwcheckbackend.user.dto.LoginRequestDTO;
-import FemSpirit.fiwcheckbackend.user.dto.LoginResponseDTO;
+import FemSpirit.fiwcheckbackend.auth.dto.LoginRequestDTO;
+import FemSpirit.fiwcheckbackend.auth.dto.LoginResponseDTO;
 import FemSpirit.fiwcheckbackend.user.entity.User;
 import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
-import FemSpirit.fiwcheckbackend.util.JwtUtil;
+import FemSpirit.fiwcheckbackend.auth.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
