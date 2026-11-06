@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 //sorgt dafür, dass Spring im Hintergrund einen Test-Client, mit dem HTTP-Anfragen an den Controller geschickt werden können, einrichten kann
 @AutoConfigureMockMvc
-public class ModuleControllerTest
+public class ModulControllerTest
 {
     //in der Variable mockMvc wird Test-Client gespeichert (Mock=simulieren, MCV=Model-View-Controller)
     @Autowired
