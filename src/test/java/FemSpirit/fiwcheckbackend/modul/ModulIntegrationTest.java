@@ -1,4 +1,4 @@
-package FemSpirit.FIWCheckBackend.modul;
+package FemSpirit.fiwcheckbackend.modul;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

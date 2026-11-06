@@ -1,4 +1,4 @@
-package FemSpirit.FIWCheckBackend.modul;
+package FemSpirit.fiwcheckbackend.modul;
 
 import FemSpirit.fiwcheckbackend.modul.controller.ModulController;
 import FemSpirit.fiwcheckbackend.modul.dto.ModulResponseDTO;
