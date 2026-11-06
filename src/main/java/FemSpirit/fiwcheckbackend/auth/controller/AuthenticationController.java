@@ -1,8 +1,8 @@
-package FemSpirit.fiwcheckbackend.user.controller;
+package FemSpirit.fiwcheckbackend.auth.controller;
 
-import FemSpirit.fiwcheckbackend.user.dto.LoginRequestDTO;
-import FemSpirit.fiwcheckbackend.user.dto.LoginResponseDTO;
-import FemSpirit.fiwcheckbackend.user.service.AuthenticationService;
+import FemSpirit.fiwcheckbackend.auth.dto.LoginRequestDTO;
+import FemSpirit.fiwcheckbackend.auth.dto.LoginResponseDTO;
+import FemSpirit.fiwcheckbackend.auth.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

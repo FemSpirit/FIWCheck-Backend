@@ -1,4 +1,4 @@
-package FemSpirit.fiwcheckbackend.user.service;
+package FemSpirit.fiwcheckbackend.auth.service;
 
 import FemSpirit.fiwcheckbackend.auth.dto.LoginRequestDTO;
 import FemSpirit.fiwcheckbackend.auth.dto.LoginResponseDTO;

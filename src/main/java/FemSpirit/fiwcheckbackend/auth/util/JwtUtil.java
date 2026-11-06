@@ -1,4 +1,4 @@
-package FemSpirit.fiwcheckbackend.util;
+package FemSpirit.fiwcheckbackend.auth.util;
 
 import FemSpirit.fiwcheckbackend.user.entity.User;
 import io.jsonwebtoken.Claims;
@@ -18,13 +18,14 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    @Value("${jwt.expiration}")
+    @Value("${jwt.expiration:86400000}")
     private long expiration;
 
     private SecretKey getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
 
     public String generateToken(User user) {
 
