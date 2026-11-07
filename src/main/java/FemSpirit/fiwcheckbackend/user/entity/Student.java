@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "student")
+@PrimaryKeyJoinColumn(name = "nutzer_id")
 public class Student extends User {
     @Column
     private LocalDateTime letzterLogin;
