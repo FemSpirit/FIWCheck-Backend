@@ -1,6 +1,8 @@
 package FemSpirit.fiwcheckbackend.user.service;
 
+import FemSpirit.fiwcheckbackend.user.entity.User;
 import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
+import FemSpirit.fiwcheckbackend.user.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +10,7 @@ import FemSpirit.fiwcheckbackend.role.repository.RoleRepository;
 import FemSpirit.fiwcheckbackend.role.entity.Role;
 import FemSpirit.fiwcheckbackend.user.dto.*;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
+import jakarta.transaction.Transactional;
 import FemSpirit.fiwcheckbackend.user.entity.User;
 
 import java.util.List;
@@ -17,11 +20,17 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    // Der EntityManager wurde entfernt, da er nicht mehr benötigt wird
+    public UserService(UserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       RoleRepository roleRepository,
+                       StudentRepository studentRepository){
         this.userRepository = userRepository;
+        this.studentRepository = studentRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
     }
@@ -40,7 +49,7 @@ public class UserService {
         return erlaubteDomain && !userRepository.existsByEmail(formatierteEmail);
     }
 
-    //Hasht das Passwort mit BCrypt, bevor es in der DB gespeichert wird.
+    // Hasht das Passwort mit BCrypt, bevor es in der DB gespeichert wird.
     private String passwortHashen(String passwort) {
         return passwordEncoder.encode(passwort);
     }
@@ -50,6 +59,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("Rolle 'student' wurde nicht gefunden."));
     }
 
+    @Transactional
     public UserResponseDTO registrieren(UserRequestDTO request) {
 
         if (!istEmailGueltig(request.email())) {
@@ -57,13 +67,14 @@ public class UserService {
         }
 
         Student student = new Student();
-
         student.setName(request.name());
         student.setEmail(request.email().trim().toLowerCase());
         student.setPassword(passwortHashen(request.password()));
         student.setRole(holeStudentRolle());
 
-        Student gespeicherterStudent = userRepository.save(student);
+        // Dank der JPA JOINED-Vererbung reicht ein einziger save()-Befehl.
+        // Hibernate speichert den User in app_user und den Studenten in student automatisch.
+        Student gespeicherterStudent = studentRepository.save(student);
 
         return new UserResponseDTO(
                 gespeicherterStudent.getUserId(),
