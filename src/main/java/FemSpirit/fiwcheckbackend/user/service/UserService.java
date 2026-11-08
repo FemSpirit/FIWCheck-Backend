@@ -1,8 +1,11 @@
 package FemSpirit.fiwcheckbackend.user.service;
 
+import FemSpirit.fiwcheckbackend.auth.dto.LoginRequestDTO;
+import FemSpirit.fiwcheckbackend.auth.dto.LoginResponseDTO;
 import FemSpirit.fiwcheckbackend.user.entity.User;
 import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
 import FemSpirit.fiwcheckbackend.user.repository.StudentRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +15,7 @@ import FemSpirit.fiwcheckbackend.user.dto.*;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
 import jakarta.transaction.Transactional;
 import FemSpirit.fiwcheckbackend.user.entity.User;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -105,7 +109,35 @@ public class UserService {
                 ))
                 .collect(Collectors.toList());
     }
-    
 
+    /**
+     * Authentifiziert einen Benutzer anhand von E-Mail-Adresse und Passwort.
+     * <p>
+     * Die E-Mail-Adresse wird vor der Prüfung normiert
+     * Schlägt die Suche nach dem Benutzer oder der Passwortvergleich fehl,
+     * wird eine {@link ResponseStatusException} geworfen.
+     * </p>
+     *
+     * @param request Das {@link LoginRequestDTO} mit den Anmeldedaten (E-Mail und Passwort).
+     * @return Ein {@link LoginResponseDTO} bei erfolgreicher Authentifizierung.
+     * @throws ResponseStatusException Wenn kein Benutzer mit der E-Mail gefunden wird
+     *                                 oder das Passwort ungültig ist (HTTP 401 Unauthorized).
+     */
+    public LoginResponseDTO login(LoginRequestDTO request) {
+        String formatierteEmail = request.getEmail().trim().toLowerCase();
 
+        //Prüfen ob der User in der Datenbank existiert
+        User user = userRepository.findByEmail(formatierteEmail)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "Ungueltige Anmeldedaten"
+                ));
+
+        //Passwort vergleichen (gehashtes Passwort aus DB mit Eingabe vergleichen)
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "Ungueltige Anmeldedaten"
+            );
+        }
+        return new LoginResponseDTO();
+    }
 }
