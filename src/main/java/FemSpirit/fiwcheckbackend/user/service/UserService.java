@@ -4,12 +4,17 @@ import FemSpirit.fiwcheckbackend.user.entity.User;
 import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
 import FemSpirit.fiwcheckbackend.user.repository.StudentRepository;
 import org.springframework.stereotype.Service;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import FemSpirit.fiwcheckbackend.role.repository.RoleRepository;
 import FemSpirit.fiwcheckbackend.role.entity.Role;
 import FemSpirit.fiwcheckbackend.user.dto.*;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
 import jakarta.transaction.Transactional;
+import FemSpirit.fiwcheckbackend.user.entity.User;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -77,4 +82,30 @@ public class UserService {
                 gespeicherterStudent.getEmail()
         );
     }
+
+    // 1. Einzelnen User anhand der ID abrufen
+    public UserResponseDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User mit der ID " + id + " wurde nicht gefunden."));
+
+        return new UserResponseDTO(
+                user.getUserId(),
+                user.getName(),
+                user.getEmail()
+        );
+    }
+
+    // 2. Alle User abrufen
+    public List<UserResponseDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserResponseDTO(
+                        user.getUserId(),
+                        user.getName(),
+                        user.getEmail()
+                ))
+                .collect(Collectors.toList());
+    }
+    
+
+
 }
