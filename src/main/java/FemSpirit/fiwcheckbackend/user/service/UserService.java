@@ -3,6 +3,7 @@ package FemSpirit.fiwcheckbackend.user.service;
 import FemSpirit.fiwcheckbackend.user.entity.User;
 import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
 import FemSpirit.fiwcheckbackend.user.repository.StudentRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +13,7 @@ import FemSpirit.fiwcheckbackend.user.dto.*;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
 import jakarta.transaction.Transactional;
 import FemSpirit.fiwcheckbackend.user.entity.User;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,5 +109,13 @@ public class UserService {
     }
     
 
+    //User anhand id loeschen
+    @Transactional
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User mit der ID " + id + " wurde nicht gefunden."));
+
+        userRepository.delete(user);
+    }
 
 }
