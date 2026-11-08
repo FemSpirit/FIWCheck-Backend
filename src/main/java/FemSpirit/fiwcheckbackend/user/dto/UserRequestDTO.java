@@ -8,13 +8,15 @@ public record UserRequestDTO(
         @NotBlank(message = "Der Name darf nicht leer sein.")
         String name,
 
-
         @NotBlank(message = "Die E-Mail-Adresse darf nicht leer sein.")
         @Email(message = "Bitte gib eine gültige E-Mail-Adresse ein.")
         String email,
 
-                @NotBlank(message = "Das Passwort darf nicht leer sein.") String password)
+        @NotBlank(message = "Das Passwort darf nicht leer sein.")
+        String password,
 
-{
-        
+        @NotBlank(message = "Die Rolle darf nicht leer sein.")
+        String role
+
+) {
 }
