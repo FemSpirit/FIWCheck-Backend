@@ -1,5 +1,7 @@
 package FemSpirit.fiwcheckbackend.user.controller;
 
+import FemSpirit.fiwcheckbackend.auth.dto.LoginRequestDTO;
+import FemSpirit.fiwcheckbackend.auth.dto.LoginResponseDTO;
 import FemSpirit.fiwcheckbackend.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import FemSpirit.fiwcheckbackend.user.dto.*;
@@ -39,6 +41,12 @@ public class UserController {
         UserResponseDTO registrierterStudent = userService.registrieren(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(registrierterStudent);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDTO> login( @Valid @RequestBody LoginRequestDTO request) {
+        LoginResponseDTO einloggen = userService.login(request);
+        return ResponseEntity.ok(einloggen);
     }
 
 
