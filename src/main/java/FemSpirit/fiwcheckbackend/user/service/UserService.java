@@ -14,7 +14,6 @@ import FemSpirit.fiwcheckbackend.role.entity.Role;
 import FemSpirit.fiwcheckbackend.user.dto.*;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
 import jakarta.transaction.Transactional;
-import FemSpirit.fiwcheckbackend.user.entity.User;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -39,19 +38,17 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
-    // Prüft, ob die angegebene E-Mail-Adresse eine erlaubte HTW-Domain besitzt und noch nicht in der DB registriert ist.
-    private boolean istEmailGueltig(String email) {
+    // Prüft, ob die angegebene E-Mail-Adresse eine erlaubte HTW-Domain besitzt
+    private boolean istEmailDomainGueltig(String email) {
 
-        if (email == null) {
-            return false;
-        }
-
-        String formatierteEmail = email.trim().toLowerCase();
-        boolean erlaubteDomain = formatierteEmail.endsWith("@student.htw-berlin.de")
-                || formatierteEmail.endsWith("@htw-berlin.de") ;
-
-        return erlaubteDomain && !userRepository.existsByEmail(formatierteEmail);
+        return email.endsWith("@student.htw-berlin.de") || email.endsWith("@htw-berlin.de") ;
     }
+    // Prüft, ob die angegebene Email im DB bereits existiert
+    private boolean emailBereitsRegistriert(String email) {
+
+        return userRepository.existsByEmail(email);
+    }
+
 
     // Hasht das Passwort mit BCrypt, bevor es in der DB gespeichert wird.
     private String passwortHashen(String passwort) {
@@ -66,13 +63,20 @@ public class UserService {
     @Transactional
     public UserResponseDTO registrieren(UserRequestDTO request) {
 
-        if (!istEmailGueltig(request.email())) {
-            throw new RuntimeException("Die E-Mail-Domain ist ungueltig oder die E-Mail-Adresse ist bereits registriert.");
+        String email = request.email().trim().toLowerCase();
+
+        if (!istEmailDomainGueltig(email)) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Die E-Mail-Domain ist ungültig.");
+        }
+        if (emailBereitsRegistriert(email)) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Diese E-Mail-Adresse ist bereits registriert.");
         }
 
         Student student = new Student();
         student.setName(request.name());
-        student.setEmail(request.email().trim().toLowerCase());
+        student.setEmail(email);
         student.setPassword(passwortHashen(request.password()));
         student.setRole(holeStudentRolle());
 
