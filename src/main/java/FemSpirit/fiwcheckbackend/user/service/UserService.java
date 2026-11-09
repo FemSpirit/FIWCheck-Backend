@@ -109,6 +109,16 @@ public class UserService {
                 ))
                 .collect(Collectors.toList());
     }
+    
+
+    //User anhand id loeschen
+    @Transactional
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User mit der ID " + id + " wurde nicht gefunden."));
+
+        userRepository.delete(user);
+    }
 
     /**
      * Authentifiziert einen Benutzer anhand von E-Mail-Adresse und Passwort.
