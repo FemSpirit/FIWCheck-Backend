@@ -113,7 +113,35 @@ public class UserService {
                 ))
                 .collect(Collectors.toList());
     }
-    
+
+    // name oder passwort akktualisieren
+    @Transactional
+    public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO request) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "User mit der ID " + id + " wurde nicht gefunden."
+                ));
+
+        if (request.name() != null && !request.name().isBlank()) {
+            user.setName(request.name());
+        }
+
+        if (request.password() != null && !request.password().isBlank()) {
+            user.setPassword(passwortHashen(request.password()));
+        }
+
+        User gespeicherterUser = userRepository.save(user);
+
+        return new UserResponseDTO(
+                gespeicherterUser.getUserId(),
+                gespeicherterUser.getName(),
+                gespeicherterUser.getEmail()
+        );
+    }
+
+
 
     //User anhand id loeschen
     @Transactional
