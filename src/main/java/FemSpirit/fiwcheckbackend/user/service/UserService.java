@@ -55,9 +55,16 @@ public class UserService {
         return passwordEncoder.encode(passwort);
     }
 
+    /**
+     * Lädt die Standard-Rolle 'student' aus der Datenbank.
+     *
+     * @return Die {@link Role}-Entität mit dem Namen "student".
+     * @throws ResponseStatusException wenn die Rolle in der Datenbank fehlt (HTTP 500 Internal Server Error).
+     */
     private Role holeStudentRolle() {
         return roleRepository.findByName("student")
-                .orElseThrow(() -> new RuntimeException("Rolle 'student' wurde nicht gefunden."));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.INTERNAL_SERVER_ERROR, "Rolle 'student' wurde nicht gefunden."));
     }
 
     @Transactional
@@ -91,10 +98,16 @@ public class UserService {
         );
     }
 
-    // 1. Einzelnen User anhand der ID abrufen
+    /**
+     * Ruft einen einzelnen Benutzer anhand seiner ID ab.
+     *
+     * @param id Die eindeutige ID des Benutzers (Primärschlüssel).
+     * @return Ein {@link UserResponseDTO} mit den Benutzerdaten.
+     * @throws ResponseStatusException wenn kein Benutzer mit dieser ID gefunden wurde (HTTP 404 Not Found).
+     */
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User mit der ID " + id + " wurde nicht gefunden."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User mit der ID " + id + " wurde nicht gefunden."));
 
         return new UserResponseDTO(
                 user.getUserId(),
