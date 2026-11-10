@@ -50,7 +50,7 @@ public class RoleService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Rolle nicht gefunden"));
 
-        if(userRepository.exsistsByRoleId(id)){
+        if(userRepository.existsByRoleId(id)){
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "Rolle ist noch einem User zugeordnet und kann nicht gelöscht werden");
         }
