@@ -7,6 +7,7 @@ import FemSpirit.fiwcheckbackend.role.repository.RoleRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
 
 import java.util.List;
 
@@ -14,9 +15,11 @@ import java.util.List;
 public class RoleService {
 
     private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
 
-    public RoleService(RoleRepository roleRepository) {
+    public RoleService(RoleRepository roleRepository, UserRepository userRepository) {
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
     }
 
     public List<RoleResponseDTO> getAllRoles() {
@@ -46,6 +49,11 @@ public class RoleService {
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Rolle nicht gefunden"));
+
+        if(userRepository.exsistsByRoleId(id)){
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Rolle ist noch einem User zugeordnet und kann nicht gelöscht werden");
+        }
         roleRepository.delete(role);
     }
 }
