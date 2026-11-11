@@ -82,7 +82,7 @@ public class UserService {
         }
 
         Student student = new Student();
-        student.setName(request.name());
+        student.setUsername(request.username());
         student.setEmail(email);
         student.setPassword(passwortHashen(request.password()));
         student.setRole(holeStudentRolle());
@@ -93,7 +93,7 @@ public class UserService {
 
         return new UserResponseDTO(
                 gespeicherterStudent.getUserId(),
-                gespeicherterStudent.getName(),
+                gespeicherterStudent.getUsername(),
                 gespeicherterStudent.getEmail()
         );
     }
@@ -111,7 +111,7 @@ public class UserService {
 
         return new UserResponseDTO(
                 user.getUserId(),
-                user.getName(),
+                user.getUsername(),
                 user.getEmail()
         );
     }
@@ -121,7 +121,7 @@ public class UserService {
         return userRepository.findAll().stream()
                 .map(user -> new UserResponseDTO(
                         user.getUserId(),
-                        user.getName(),
+                        user.getUsername(),
                         user.getEmail()
                 ))
                 .collect(Collectors.toList());
@@ -137,8 +137,8 @@ public class UserService {
                         "User mit der ID " + id + " wurde nicht gefunden."
                 ));
 
-        if (request.name() != null && !request.name().isBlank()) {
-            user.setName(request.name());
+        if (request.username() != null && !request.username().isBlank()) {
+            user.setUsername(request.username());
         }
 
         if (request.password() != null && !request.password().isBlank()) {
@@ -149,7 +149,7 @@ public class UserService {
 
         return new UserResponseDTO(
                 gespeicherterUser.getUserId(),
-                gespeicherterUser.getName(),
+                gespeicherterUser.getUsername(),
                 gespeicherterUser.getEmail()
         );
     }
