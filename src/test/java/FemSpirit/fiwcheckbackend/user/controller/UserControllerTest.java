@@ -27,7 +27,7 @@ class UserControllerTest {
     private final PasswordEncoder passwordEncoder;
 
     // Testdaten für Registrierung
-    private static final String NAME = "Talaa";
+    private static final String USERNAME = "Talaa";
     private static final String EMAIL = "Talaa@student.htw-berlin.de";
     private static final String PASSWORD = "password123";
 
@@ -57,18 +57,18 @@ class UserControllerTest {
 
         String request = """
                 {
-                    "name": "%s",
+                    "username": "%s",
                     "email": "%s",
                     "password": "%s",
                      "role": "student"
                 }
-                """.formatted(NAME, EMAIL, PASSWORD);
+                """.formatted(USERNAME, EMAIL, PASSWORD);
 
         mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(request))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", is(NAME)))
+                .andExpect(jsonPath("$.username", is(USERNAME)))
                 .andExpect(jsonPath("$.email", is(EMAIL.toLowerCase())));
 
         User gespeicherterUser = userRepository.findByEmail(EMAIL.toLowerCase())
@@ -86,12 +86,12 @@ class UserControllerTest {
 
         String request = """
             {
-                "name": "%s",
+                "username": "%s",
                 "email": "Talaa@gmail.com",
                 "password": "%s",
                 "role": "student"
             }
-            """.formatted(NAME, PASSWORD);
+            """.formatted(USERNAME, PASSWORD);
 
         mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -105,12 +105,12 @@ class UserControllerTest {
 
         String request = """
             {
-                "name": "%s",
+                "username": "%s",
                 "email": "%s",
                 "password": "12345",
                 "role": "student"
             }
-            """.formatted(NAME, EMAIL);
+            """.formatted(USERNAME, EMAIL);
 
         mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -124,7 +124,7 @@ class UserControllerTest {
 
         String request = """
             {
-                "name": "DasIstEineZuLangeName",
+                "username": "DasIstEineZuLangeName",
                 "email": "%s",
                 "password": "%s",
                 "role": "student"
@@ -143,12 +143,12 @@ class UserControllerTest {
 
         String request = """
         {
-            "name": "%s",
+            "username": "%s",
             "email": "%s",
             "password": "%s",
             "role": "student"
         }
-        """.formatted(NAME, EMAIL, PASSWORD);
+        """.formatted(USERNAME, EMAIL, PASSWORD);
 
         // Erste Registrierung: sollte erfolgreich sein.
         mockMvc.perform(post("/user/register")
