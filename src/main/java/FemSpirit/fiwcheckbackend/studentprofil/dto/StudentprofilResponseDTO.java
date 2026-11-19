@@ -1,4 +1,11 @@
 package FemSpirit.fiwcheckbackend.studentprofil.dto;
 
-public class StudentprofilResponseDTO {
+public record StudentprofilResponseDTO(
+        String name,
+        String email,
+        Long stupoId,
+        Integer stupoGueltigAb,
+        Integer startsemester,
+        String aweVariante
+) {
 }
