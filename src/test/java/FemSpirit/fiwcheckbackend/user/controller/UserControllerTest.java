@@ -2,27 +2,25 @@ package FemSpirit.fiwcheckbackend.user.controller;
 
 import FemSpirit.fiwcheckbackend.user.entity.User;
 import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import org.springframework.transaction.annotation.Transactional;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ActiveProfiles("test")
 @SpringBootTest
-@AutoConfigureMockMvc // ermoeglichst HTTP-Anfragen zu simulieren.
+@AutoConfigureMockMvc // ermoeglicht HTTP-Anfragen zu simulieren.
+@Transactional
 class UserControllerTest {
 
-    private final MockMvc mockMvc;
+    private final MockMvcTester mockMvcTester;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -31,138 +29,132 @@ class UserControllerTest {
     private static final String EMAIL = "Talaa@student.htw-berlin.de";
     private static final String PASSWORD = "password123";
 
-
     @Autowired
     public UserControllerTest(
-            MockMvc mockMvc,
+            MockMvcTester mockMvcTester,
             UserRepository userRepository,
             PasswordEncoder passwordEncoder) {
 
-        this.mockMvc = mockMvc;
+        this.mockMvcTester = mockMvcTester;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    // Löscht vor jedem Test die Daten aus der H2-Testdatenbank.
-    // Die Entwicklungsdatenbank ist davon nicht betroffen.
-    @BeforeEach
-    void setUp() {
-        userRepository.deleteAll();
     }
 
     // Test 1: Prüft, ob eine Studentin mit gültigen Daten erfolgreich registriert wird
     // und ob ihr Passwort korrekt gehasht in der Datenbank gespeichert wird.
     @Test
-    void register_WithValidData_ShouldReturnCreated() throws Exception {
+    void register_WithValidData_ShouldReturnCreated() {
 
         String request = """
                 {
                     "username": "%s",
                     "email": "%s",
                     "password": "%s",
-                     "role": "student"
+                    "role": "student"
                 }
                 """.formatted(USERNAME, EMAIL, PASSWORD);
 
-        mockMvc.perform(post("/user/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.username", is(USERNAME)))
-                .andExpect(jsonPath("$.email", is(EMAIL.toLowerCase())));
+        assertThat(mockMvcTester.post().uri("/user/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .hasStatus(HttpStatus.CREATED)
+                .bodyJson()
+                .doesNotHavePath("$.password")
+                .extractingPath("$.username").isEqualTo(USERNAME);
 
         User gespeicherterUser = userRepository.findByEmail(EMAIL.toLowerCase())
                 .orElseThrow();
 
-        assertTrue(passwordEncoder.matches(
+        assertThat(passwordEncoder.matches(
                 PASSWORD,
                 gespeicherterUser.getPassword()
-        ));
+        )).isTrue();
     }
 
     // Test 2: Prüft, ob ein ungueltiges Domain abgelehnt wird.
     @Test
-    void register_WithInvalidEmailDomain_ShouldReturnBadRequest() throws Exception {
+    void register_WithInvalidEmailDomain_ShouldReturnBadRequest() {
 
         String request = """
-            {
-                "username": "%s",
-                "email": "Talaa@gmail.com",
-                "password": "%s",
-                "role": "student"
-            }
-            """.formatted(USERNAME, PASSWORD);
+                {
+                    "username": "%s",
+                    "email": "Talaa@gmail.com",
+                    "password": "%s",
+                    "role": "student"
+                }
+                """.formatted(USERNAME, PASSWORD);
 
-        mockMvc.perform(post("/user/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
-                .andExpect(status().isBadRequest());
+        assertThat(mockMvcTester.post().uri("/user/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .hasStatus(HttpStatus.BAD_REQUEST);
     }
 
     // Test 3: Prüft, ob ein zu kurzes Passwort abgelehnt wird.
     @Test
-    void register_WithTooShortPassword_ShouldReturnBadRequest() throws Exception {
+    void register_WithTooShortPassword_ShouldReturnBadRequest() {
 
         String request = """
-            {
-                "username": "%s",
-                "email": "%s",
-                "password": "12345",
-                "role": "student"
-            }
-            """.formatted(USERNAME, EMAIL);
+                {
+                    "username": "%s",
+                    "email": "%s",
+                    "password": "12345",
+                    "role": "student"
+                }
+                """.formatted(USERNAME, EMAIL);
 
-        mockMvc.perform(post("/user/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
-                .andExpect(status().isBadRequest());
+        assertThat(mockMvcTester.post().uri("/user/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .hasStatus(HttpStatus.BAD_REQUEST);
     }
 
     // Test 4: Prüft, ob ein zu langer Name abgelehnt wird.
     @Test
-    void register_WithTooLongName_ShouldReturnBadRequest() throws Exception {
+    void register_WithTooLongName_ShouldReturnBadRequest() {
 
         String request = """
-            {
-                "username": "DasIstEineZuLangeName",
-                "email": "%s",
-                "password": "%s",
-                "role": "student"
-            }
-            """.formatted(EMAIL, PASSWORD);
+                {
+                    "username": "DasIstEineZuLangeName",
+                    "email": "%s",
+                    "password": "%s",
+                    "role": "student"
+                }
+                """.formatted(EMAIL, PASSWORD);
 
-        mockMvc.perform(post("/user/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
-                .andExpect(status().isBadRequest());
+        assertThat(mockMvcTester.post().uri("/user/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .hasStatus(HttpStatus.BAD_REQUEST);
     }
 
     // Test 5: Prüft, ob eine bereits registrierte E-Mail-Adresse abgelehnt wird.
     @Test
-    void register_WithExistingEmail_ShouldReturnConflict() throws Exception {
+    void register_WithExistingEmail_ShouldReturnConflict() {
 
         String request = """
-        {
-            "username": "%s",
-            "email": "%s",
-            "password": "%s",
-            "role": "student"
-        }
-        """.formatted(USERNAME, EMAIL, PASSWORD);
+                {
+                    "username": "%s",
+                    "email": "%s",
+                    "password": "%s",
+                    "role": "student"
+                }
+                """.formatted(USERNAME, EMAIL, PASSWORD);
 
         // Erste Registrierung: sollte erfolgreich sein.
-        mockMvc.perform(post("/user/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
-                .andExpect(status().isCreated());
+        assertThat(mockMvcTester.post().uri("/user/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .hasStatus(HttpStatus.CREATED);
 
         // Zweite Registrierung mit derselben E-Mail: sollte abgelehnt werden.
-        mockMvc.perform(post("/user/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(request))
-                .andExpect(status().isConflict());
+        assertThat(mockMvcTester.post().uri("/user/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(request))
+                .hasStatus(HttpStatus.CONFLICT);
     }
 }
+
 
 
 
