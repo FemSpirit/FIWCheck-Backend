@@ -3,6 +3,8 @@ package FemSpirit.fiwcheckbackend.semesterplan.entity;
 import FemSpirit.fiwcheckbackend.belegung.entity.Belegung;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "semesterplan")
@@ -19,6 +21,9 @@ public class Semesterplan {
   @ManyToOne(optional = false)
   @JoinColumn(name = "student_id", nullable = false)
   private Student student;
+
+  @OneToMany(mappedBy = "semesterplan")
+  private List<Belegung> belegungen = new ArrayList<>();
 
   public Semesterplan() {
   }
@@ -45,5 +50,13 @@ public class Semesterplan {
 
   public void setStudent(Student student) {
     this.student = student;
+  }
+
+  public List<Belegung> getBelegungen() {
+    return belegungen;
+  }
+
+  public void setBelegungen(List<Belegung> belegungen) {
+    this.belegungen = belegungen;
   }
 }
