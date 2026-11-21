@@ -1,33 +1,38 @@
 package FemSpirit.fiwcheckbackend.user.entity;
+
 import FemSpirit.fiwcheckbackend.stupo.entity.Stupo;
-import FemSpirit.fiwcheckbackend.user.entity.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "student")
-@PrimaryKeyJoinColumn(name = "nutzer_id")
+@PrimaryKeyJoinColumn(name = "student_id")
 public class Student extends User {
+
     @Column
     private LocalDateTime letzterLogin;
 
     /*
-     * vollzeit, studiumBeginn, aweVariante und stupo waren ursprünglich Pflichtfelder ( nullable = false) ,
+     * vollzeit, studiumBeginn, aweVariante und stupo waren ursprünglich Pflichtfelder (nullable = false) ,
      * werden aber bei der Registrierung nicht abgefragt.
      * Sie können daher zunächst null sein und werden später bei der Profilvervollständigung ergänzt.
      * Deshalb wird nullable=true
      */
-    @Column(nullable = true)
+    @Column
     private Boolean vollzeit;
 
-    @Column(nullable = true)
+    @Column
     private Integer studiumBeginn;
 
-    @Column(length = 10, nullable = true)
+    @Column(length = 10)
     private String aweVariante;
 
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "stupo_id", nullable = true)
+    /*
+    Der Fremdschluessel stupo_id wird von optional=false auf optional=true gesetzt, weil die Studentin nach der Registrierung
+    die Stupo angibt
+     */
+    @ManyToOne
+    @JoinColumn(name = "stupo_id")
     private Stupo stupo;
 
     public Student() {

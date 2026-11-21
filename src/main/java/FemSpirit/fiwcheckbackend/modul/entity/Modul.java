@@ -1,4 +1,5 @@
 package FemSpirit.fiwcheckbackend.modul.entity;
+
 import FemSpirit.fiwcheckbackend.stupo.entity.Modulgruppe;
 import FemSpirit.fiwcheckbackend.stupo.entity.Stupo;
 import jakarta.persistence.*;
@@ -9,7 +10,41 @@ public class Modul {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ModulId;
+    @Column(name = "modul_id")
+    private Long modulId;
+
+    @Column(length = 10, nullable = false)
+    private String modulnummer;
+
+    @Column(length = 50, nullable = false)
+    private String bezeichnung;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String beschreibung;
+
+    @Column(nullable = false)
+    private Integer ects;
+
+    @Column(length = 10, nullable = false)
+    private String sws;
+
+    @Column(nullable = false)
+    private boolean pflichtart;
+
+    @Column(length = 20, nullable = false)
+    private String angebotssemester;
+
+  @Column(nullable = false)
+    private Integer empfohlenesSemester;
+
+    @Column(nullable = false)
+    private Integer fliesstInGesamtnote;
+
+    @Column(nullable = false)
+    private Boolean zeugnisrelevant;
+
+    @Column(length= 20,nullable = false)
+    private String fachgruppe;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "stupo_id", nullable = false)
@@ -19,56 +54,25 @@ public class Modul {
     @JoinColumn(name = "modulgruppe_id", nullable = false)
     private Modulgruppe modulgruppe;
 
-    @Column(length = 50, nullable = false)
-    private String bezeichnung;
-
-    @Column(length = 200)
-    private String beschreibung;
-
-    @Column(nullable = false)
-    private Integer ects;
-
-    @Column(nullable = false)
-    private Integer sws;
-
-    @Column(length = 20, nullable = false)
-    private String pflichtart;
-
-    @Column(length = 20, nullable = false)
-    private String angebotssemester;
-
-    @Column(nullable = false)
-    private Integer fliesstInGesamtnote;
-
-    @Column(nullable = false)
-    private Boolean zeugnisrelevant;
-
     public Modul() {
     }
 
     public Long getModulId() {
-        return ModulId;
+        return modulId;
     }
 
-    public void setModulId(Long ModulId) {
-        this.ModulId = ModulId;
+    public void setModulId(Long modulId) {
+        this.modulId = modulId;
     }
 
-    public Stupo getStupo() {
-        return stupo;
+    public String getModulnummer() {
+      return modulnummer;
     }
 
-    public void setStupo(Stupo stupo) {
-        this.stupo = stupo;
+    public void setModulnummer(String modulnummer) {
+      this.modulnummer = modulnummer;
     }
 
-    public Modulgruppe getModulgruppe() {
-        return modulgruppe;
-    }
-
-    public void setModulgruppe(Modulgruppe modulgruppe) {
-        this.modulgruppe = modulgruppe;
-    }
     public String getBezeichnung() {
         return bezeichnung;
     }
@@ -90,22 +94,22 @@ public class Modul {
     }
 
     public void setEcts(Integer ects) {
-        this.ects = ects;
+      this.ects = ects;
     }
 
-    public Integer getSws() {
-        return sws;
+    public String getSws() {
+      return sws;
     }
 
-    public void setSws(Integer sws) {
-        this.sws = sws;
+    public void setSws(String sws) {
+      this.sws = sws;
     }
 
-    public String getPflichtart() {
+    public boolean getPflichtart() {
         return pflichtart;
     }
 
-    public void setPflichtart(String pflichtart) {
+    public void setPflichtart(boolean pflichtart) {
         this.pflichtart = pflichtart;
     }
 
@@ -115,6 +119,14 @@ public class Modul {
 
     public void setAngebotssemester(String angebotssemester) {
         this.angebotssemester = angebotssemester;
+    }
+
+    public Integer getEmpfohlenesSemester() {
+      return empfohlenesSemester;
+    }
+
+    public void setEmpfohlenesSemester(Integer empfohlenesSemester) {
+      this.empfohlenesSemester = empfohlenesSemester;
     }
 
     public Integer getFliesstInGesamtnote() {
@@ -131,5 +143,29 @@ public class Modul {
 
     public void setZeugnisrelevant(Boolean zeugnisrelevant) {
         this.zeugnisrelevant = zeugnisrelevant;
+    }
+
+    public String getFachgruppe() {
+      return fachgruppe;
+    }
+
+    public void setFachgruppe(String fachgruppe) {
+      this.fachgruppe = fachgruppe;
+    }
+
+    public Stupo getStupo() {
+        return stupo;
+      }
+
+    public void setStupo(Stupo stupo) {
+        this.stupo = stupo;
+      }
+
+    public Modulgruppe getModulgruppe() {
+        return modulgruppe;
+      }
+
+    public void setModulgruppe(Modulgruppe modulgruppe) {
+      this.modulgruppe = modulgruppe;
     }
 }

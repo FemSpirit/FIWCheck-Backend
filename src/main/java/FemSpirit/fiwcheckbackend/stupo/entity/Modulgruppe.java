@@ -1,4 +1,5 @@
 package FemSpirit.fiwcheckbackend.stupo.entity;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -7,9 +8,10 @@ public class Modulgruppe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "modulgruppe_id")
     private Long modulgruppeId;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 50, nullable = false)
     private String bezeichnung;
 
     public Modulgruppe() {

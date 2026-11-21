@@ -8,7 +8,11 @@ public class ModulVoraussetzung {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "voraussetzung_id")
     private Long voraussetzungId;
+
+    @Column(length = 10, nullable = false)
+    private String voraussetzungstyp;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "modul_id", nullable = false)
@@ -16,10 +20,7 @@ public class ModulVoraussetzung {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "voraussetzung_modul_id", nullable = false)
-    private Modul voraussetzung;
-
-    @Column(length = 20, nullable = false)
-    private String voraussetzungstyp;
+    private Modul voraussetzungModulId;
 
     public ModulVoraussetzung() {
     }
@@ -41,11 +42,11 @@ public class ModulVoraussetzung {
     }
 
     public Modul getVoraussetzung() {
-        return voraussetzung;
+        return voraussetzungModulId;
     }
 
     public void setVoraussetzung(Modul voraussetzung) {
-        this.voraussetzung = voraussetzung;
+        this.voraussetzungModulId = voraussetzung;
     }
 
     public String getVoraussetzungstyp() {

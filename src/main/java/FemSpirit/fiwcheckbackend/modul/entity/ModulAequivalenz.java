@@ -8,6 +8,7 @@ public class ModulAequivalenz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "aequivalenz_id")
     private Long aequivalenzId;
 
     @OneToOne(optional = false)
