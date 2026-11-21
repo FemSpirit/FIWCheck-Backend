@@ -12,12 +12,26 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.postgresql.PostgreSQLContainer;
+
+import static org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase.Replace.NONE;
 
 @DataJpaTest
+@Testcontainers(disabledWithoutDocker = true)
+@AutoConfigureTestDatabase(replace = NONE)
 @TestPropertySource(properties = {
         "spring.jpa.hibernate.ddl-auto=create-drop"
 })
 class UserRepositoryTest {
+
+    @Container
+    @ServiceConnection
+    static PostgreSQLContainer postgres =
+            new PostgreSQLContainer("postgres:17-alpine");
 
     @Autowired
     private TestEntityManager entityManager;
