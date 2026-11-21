@@ -1,7 +1,7 @@
 package FemSpirit.fiwcheckbackend.belegung.entity;
 
 import FemSpirit.fiwcheckbackend.modul.entity.Modul;
-import FemSpirit.fiwcheckbackend.user.entity.Student;
+import FemSpirit.fiwcheckbackend.semesterplan.entity.Semesterplan;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -24,8 +24,8 @@ public class Belegung {
     private Integer versuchsnummer;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "student_id", nullable = false)
-    private Student student;
+    @JoinColumn(name = "semesterplan_id", nullable = false)
+    private Semesterplan semesterplan;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "modul_id", nullable = false)
@@ -66,12 +66,12 @@ public class Belegung {
         this.versuchsnummer = versuchsnummer;
     }
 
-    public Student getStudent() {
-      return student;
+    public Semesterplan getSemesterplan() {
+      return semesterplan;
     }
 
-    public void setStudent(Student student) {
-      this.student = student;
+    public void setSemesterplan(Semesterplan semesterplan) {
+      this.semesterplan = semesterplan;
     }
 
     public Modul getModul() {
