@@ -26,7 +26,7 @@ public class ModulService {
 
     /**
      * holt ein spezifisches Modul anhand seiner ID aus der Datenbank
-     * wirft einen HTTP-404-NOT_FOUND-Fehler, falls kein Mosul mit dieser ID existiert
+     * wirft einen HTTP-404-NOT_FOUND-Fehler, falls kein Modul mit dieser ID existiert
      *
      * @param id Die ID des gesuchten Moduls
      * @return Das gefundene Modul als DTO
@@ -43,13 +43,16 @@ public class ModulService {
     private ModulResponseDTO mapToDTO(Modul module) {
         return new ModulResponseDTO(
                 module.getModulId(),
+                module.getModulnummer(),
                 module.getBezeichnung(),
                 module.getBeschreibung(),
                 module.getEcts(),
                 module.getSws(),
                 module.getPflichtart(),
                 module.getAngebotssemester(),
+                module.getEmpfohlenesSemester(),
                 module.getFliesstInGesamtnote(),
-                module.getZeugnisrelevant()
+                module.getZeugnisrelevant(),
+                module.getFachgruppe()
         );
     }}

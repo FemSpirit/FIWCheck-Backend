@@ -7,6 +7,7 @@ public class Stupo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "stupo_id")
     private Long stupoId;
 
     @Column(nullable = false)

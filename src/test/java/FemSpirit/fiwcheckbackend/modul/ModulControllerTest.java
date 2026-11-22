@@ -40,12 +40,14 @@ class ModulControllerTest
     @BeforeEach
     void setUpTestdata() {
         standardModul = new ModulResponseDTO(
-                1L, "Software Engineering", "Beschreibung",
-                    5, 4, "Pflicht", "WiSe", 1, true
+                1L,"B32","Software Engineering 2", "Beschreibung",
+                5, "2/2", true, "WiSe", 3,
+                50, true, "Informatik"
         );
         zweitesModul = new ModulResponseDTO(
-                2L, "Datenbanken", "Beschreibung 2",
-                5, 4, "Wahlpflicht", "SoSe",1, true
+                2L,"WP3","Vertiefung in Datenbanken und Datenstrukturen", "Beschreibung 2",
+                5, "4/4", false, "WiSe/SoSe", 4,
+                100, true, "Informatik"
         );
     }
 
