@@ -3,6 +3,8 @@ package FemSpirit.fiwcheckbackend.modul;
 import FemSpirit.fiwcheckbackend.modul.controller.ModulController;
 import FemSpirit.fiwcheckbackend.modul.dto.ModulResponseDTO;
 import FemSpirit.fiwcheckbackend.modul.service.ModulService;
+import FemSpirit.fiwcheckbackend.stupo.entity.Modulgruppe;
+import FemSpirit.fiwcheckbackend.stupo.entity.Stupo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +16,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
@@ -39,15 +42,33 @@ class ModulControllerTest
     // wird vor jedem Test ausgeführt und befüllt Variablen
     @BeforeEach
     void setUpTestdata() {
+
+            Stupo ersteStupo = new Stupo();
+            ersteStupo.setStupoId(1L);          // falls der Setter so heißt (sonst per Autovervollständigung prüfen)
+            ersteStupo.setGueltigAb(2024);      // Beispiel für ein weiteres Feld, falls im Test gebraucht
+
+            Modulgruppe ersteModulgruppe = new Modulgruppe();
+            ersteModulgruppe.setModulgruppeId(1L); // falls der Setter so heißt
+            ersteModulgruppe.setBezeichnung("Pflichtbereich");
+
         standardModul = new ModulResponseDTO(
                 1L,"B32","Software Engineering 2", "Beschreibung",
-                5, "2/2", true, "WiSe", 3,
-                50, true, "Informatik"
+                5, "2/2", "4/2", true,"WiSe", 3,
+                50, true, false,
+                "Informatik", BigDecimal.valueOf(1.0), ersteStupo, ersteModulgruppe
         );
+            Stupo zweiteStupo = new Stupo();
+            zweiteStupo.setStupoId(1L);
+
+            Modulgruppe zweiteModulgruppe = new Modulgruppe();
+            zweiteModulgruppe.setModulgruppeId(2L);
+            zweiteModulgruppe.setBezeichnung("Wahlpflichtbereich");
+
         zweitesModul = new ModulResponseDTO(
                 2L,"WP3","Vertiefung in Datenbanken und Datenstrukturen", "Beschreibung 2",
-                5, "4/4", false, "WiSe/SoSe", 4,
-                100, true, "Informatik"
+                5, "4/4", "2",  false, "WiSe/SoSe", 4,
+                100, true, true,
+                "Informatik", BigDecimal.valueOf(1.0), zweiteStupo, zweiteModulgruppe
         );
     }
 
@@ -72,7 +93,7 @@ class ModulControllerTest
     }
 
     @Test
-    @DisplayName("GET /api/module - solte eine leere Liste zurückgeben, wenn keine Module existieren")
+    @DisplayName("GET /api/module - sollte eine leere Liste zurückgeben, wenn keine Module existieren")
     void should_ReturnEmptyList_when_NoModulesExist() throws Exception {
         //Arrange: Wenn der Service nach allen Modulen gefragt wird,
         //gibt er eine leere Liste zurück

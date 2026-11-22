@@ -35,7 +35,7 @@ public class ModulService {
     {
         Modul modul = modulRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Modul mit der ID " + id + "wurde nicht gefunden"));
+                        "Modul mit der ID " + id + " wurde nicht gefunden"));
         return mapToDTO(modul);
     }
 
@@ -47,12 +47,17 @@ public class ModulService {
                 module.getBezeichnung(),
                 module.getBeschreibung(),
                 module.getEcts(),
+                module.getForm(),
                 module.getSws(),
                 module.getPflichtart(),
                 module.getAngebotssemester(),
                 module.getEmpfohlenesSemester(),
-                module.getFliesstInGesamtnote(),
+                module.getFliesstInModulgruppennote(),
                 module.getZeugnisrelevant(),
-                module.getFachgruppe()
+                module.getGesamtnotenrelevant(),
+                module.getFachgruppe(),
+                module.getRasterGroesseVz(),
+                module.getStupo(),
+                module.getModulgruppe()
         );
     }}

@@ -1,17 +1,27 @@
 package FemSpirit.fiwcheckbackend.modul.dto;
 
+import FemSpirit.fiwcheckbackend.stupo.entity.Modulgruppe;
+import FemSpirit.fiwcheckbackend.stupo.entity.Stupo;
+
+import java.math.BigDecimal;
+
 public record ModulResponseDTO(
         Long modulId,
         String modulnummer,
         String bezeichnung,
         String beschreibung,
         Integer ects,
+        String form,
         String sws,
         Boolean pflichtart,
         String angebotssemester,
         Integer empfohlenesSemester,
-        Integer fliesstInGesamtnote,
+        Integer fliesstInModulgruppennote,
         Boolean zeugnisrelevant,
-        String fachgruppe
+        Boolean gesamtnotenrelevant,
+        String fachgruppe,
+        BigDecimal rasterGroesseVz,
+        Stupo stupo,
+        Modulgruppe modulgruppe
 ) {
 }
