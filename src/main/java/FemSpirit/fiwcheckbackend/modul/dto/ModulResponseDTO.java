@@ -10,7 +10,7 @@ public record ModulResponseDTO(
         Boolean pflichtart,
         String angebotssemester,
         Integer empfohlenesSemester,
-        Integer fliesstInGesamtnote,
+        Integer fliesstInModulgruppennote,
         Boolean zeugnisrelevant,
         String fachgruppe
 ) {

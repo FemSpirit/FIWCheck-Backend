@@ -72,7 +72,7 @@ class ModulControllerTest
     }
 
     @Test
-    @DisplayName("GET /api/module - solte eine leere Liste zurückgeben, wenn keine Module existieren")
+    @DisplayName("GET /api/module - sollte eine leere Liste zurückgeben, wenn keine Module existieren")
     void should_ReturnEmptyList_when_NoModulesExist() throws Exception {
         //Arrange: Wenn der Service nach allen Modulen gefragt wird,
         //gibt er eine leere Liste zurück

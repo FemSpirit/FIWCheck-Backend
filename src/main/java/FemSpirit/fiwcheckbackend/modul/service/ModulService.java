@@ -51,7 +51,7 @@ public class ModulService {
                 module.getPflichtart(),
                 module.getAngebotssemester(),
                 module.getEmpfohlenesSemester(),
-                module.getFliesstInGesamtnote(),
+                module.getFliesstInModulgruppennote(),
                 module.getZeugnisrelevant(),
                 module.getFachgruppe()
         );

@@ -38,7 +38,7 @@ public class Modul {
     private Integer empfohlenesSemester;
 
     @Column(nullable = false)
-    private Integer fliesstInGesamtnote;
+    private Integer fliesstInModulgruppennote;
 
     @Column(nullable = false)
     private Boolean zeugnisrelevant;
@@ -129,12 +129,12 @@ public class Modul {
       this.empfohlenesSemester = empfohlenesSemester;
     }
 
-    public Integer getFliesstInGesamtnote() {
-        return fliesstInGesamtnote;
+    public Integer getFliesstInModulgruppennote() {
+        return fliesstInModulgruppennote;
     }
 
-    public void setFliesstInGesamtnote(Integer fliesstInGesamtnote) {
-        this.fliesstInGesamtnote = fliesstInGesamtnote;
+    public void setFliesstInModulgruppennote(Integer fliesstInGesamtnote) {
+        this.fliesstInModulgruppennote = fliesstInGesamtnote;
     }
 
     public Boolean getZeugnisrelevant() {
