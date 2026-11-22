@@ -4,6 +4,8 @@ import FemSpirit.fiwcheckbackend.stupo.entity.Modulgruppe;
 import FemSpirit.fiwcheckbackend.stupo.entity.Stupo;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "modul")
 public class Modul {
@@ -25,11 +27,14 @@ public class Modul {
     @Column(nullable = false)
     private Integer ects;
 
+    @Column(nullable = false, length = 10)
+    private String form;
+
     @Column(length = 10, nullable = false)
     private String sws;
 
     @Column(nullable = false)
-    private boolean pflichtart;
+    private Boolean pflichtart;
 
     @Column(length = 20, nullable = false)
     private String angebotssemester;
@@ -37,14 +42,21 @@ public class Modul {
   @Column(nullable = false)
     private Integer empfohlenesSemester;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Integer fliesstInModulgruppennote;
 
     @Column(nullable = false)
     private Boolean zeugnisrelevant;
 
+    @Column (nullable = false)
+    private Boolean gesamtnotenrelevant;
+
     @Column(length= 20,nullable = false)
     private String fachgruppe;
+
+    @Column(nullable = true, precision = 2, scale = 1, columnDefinition = "NUMERIC(2,1) " +
+            "DEFAULT 1.0 CHECK (raster_groesse_vz IS NULL OR raster_groesse_vz IN (0.5, 1.0, 2.0, 4.0))")
+    private BigDecimal rasterGroesseVz = new BigDecimal("1.0");
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "stupo_id", nullable = false)
@@ -57,115 +69,74 @@ public class Modul {
     public Modul() {
     }
 
-    public Long getModulId() {
-        return modulId;
-    }
+    public Long getModulId() { return modulId; }
 
-    public void setModulId(Long modulId) {
-        this.modulId = modulId;
-    }
+    public void setModulId(Long modulId) { this.modulId = modulId; }
 
-    public String getModulnummer() {
-      return modulnummer;
-    }
+    public String getModulnummer() { return modulnummer; }
 
-    public void setModulnummer(String modulnummer) {
-      this.modulnummer = modulnummer;
-    }
+    public void setModulnummer(String modulnummer) { this.modulnummer = modulnummer; }
 
-    public String getBezeichnung() {
-        return bezeichnung;
-    }
+    public String getBezeichnung() { return bezeichnung; }
 
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
+    public void setBezeichnung(String bezeichnung) { this.bezeichnung = bezeichnung; }
 
-    public String getBeschreibung() {
-        return beschreibung;
-    }
+    public String getBeschreibung() { return beschreibung; }
 
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
-    }
+    public void setBeschreibung(String beschreibung) { this.beschreibung = beschreibung; }
 
-    public Integer getEcts() {
-        return ects;
-    }
+    public Integer getEcts() { return ects; }
 
-    public void setEcts(Integer ects) {
-      this.ects = ects;
-    }
+    public void setEcts(Integer ects) { this.ects = ects; }
 
-    public String getSws() {
-      return sws;
-    }
+    public String getForm() { return form; }
 
-    public void setSws(String sws) {
-      this.sws = sws;
-    }
+    public void setForm(String form) { this.form = form; }
 
-    public boolean getPflichtart() {
-        return pflichtart;
-    }
+    public String getSws() { return sws; }
 
-    public void setPflichtart(boolean pflichtart) {
-        this.pflichtart = pflichtart;
-    }
+    public void setSws(String sws) { this.sws = sws; }
 
-    public String getAngebotssemester() {
-        return angebotssemester;
-    }
+    public boolean getPflichtart() { return pflichtart; }
 
-    public void setAngebotssemester(String angebotssemester) {
-        this.angebotssemester = angebotssemester;
-    }
+    public void setPflichtart(Boolean pflichtart) { this.pflichtart = pflichtart; }
 
-    public Integer getEmpfohlenesSemester() {
-      return empfohlenesSemester;
-    }
+    public String getAngebotssemester() { return angebotssemester; }
 
-    public void setEmpfohlenesSemester(Integer empfohlenesSemester) {
-      this.empfohlenesSemester = empfohlenesSemester;
-    }
+    public void setAngebotssemester(String angebotssemester) { this.angebotssemester = angebotssemester; }
 
-    public Integer getFliesstInModulgruppennote() {
-        return fliesstInModulgruppennote;
-    }
+    public Integer getEmpfohlenesSemester() { return empfohlenesSemester; }
 
-    public void setFliesstInModulgruppennote(Integer fliesstInGesamtnote) {
-        this.fliesstInModulgruppennote = fliesstInGesamtnote;
-    }
+    public void setEmpfohlenesSemester(Integer empfohlenesSemester)
+        { this.empfohlenesSemester = empfohlenesSemester; }
 
-    public Boolean getZeugnisrelevant() {
-        return zeugnisrelevant;
-    }
+    public Integer getFliesstInModulgruppennote() { return fliesstInModulgruppennote; }
 
-    public void setZeugnisrelevant(Boolean zeugnisrelevant) {
-        this.zeugnisrelevant = zeugnisrelevant;
-    }
+    public void setFliesstInModulgruppennote(Integer fliesstInModulgruppennote)
+        { this.fliesstInModulgruppennote = fliesstInModulgruppennote; }
 
-    public String getFachgruppe() {
-      return fachgruppe;
-    }
+    public Boolean getZeugnisrelevant() { return zeugnisrelevant; }
 
-    public void setFachgruppe(String fachgruppe) {
-      this.fachgruppe = fachgruppe;
-    }
+    public void setZeugnisrelevant(Boolean zeugnisrelevant) { this.zeugnisrelevant = zeugnisrelevant; }
 
-    public Stupo getStupo() {
-        return stupo;
-      }
+    public Boolean getGesamtnotenrelevant() { return gesamtnotenrelevant; }
 
-    public void setStupo(Stupo stupo) {
-        this.stupo = stupo;
-      }
+    public void setGesamtnotenrelevant(Boolean gesamtnotenrelevant)
+        { this.gesamtnotenrelevant = gesamtnotenrelevant; }
 
-    public Modulgruppe getModulgruppe() {
-        return modulgruppe;
-      }
+    public String getFachgruppe() { return fachgruppe; }
 
-    public void setModulgruppe(Modulgruppe modulgruppe) {
-      this.modulgruppe = modulgruppe;
-    }
+    public void setFachgruppe(String fachgruppe) { this.fachgruppe = fachgruppe; }
+
+    public BigDecimal getRasterGroesseVz() { return rasterGroesseVz; }
+
+    public void setRasterGroesseVz(BigDecimal rasterGroesseVz) { this.rasterGroesseVz = rasterGroesseVz; }
+
+    public Stupo getStupo() { return stupo; }
+
+    public void setStupo(Stupo stupo) { this.stupo = stupo; }
+
+    public Modulgruppe getModulgruppe() { return modulgruppe; }
+
+    public void setModulgruppe(Modulgruppe modulgruppe) { this.modulgruppe = modulgruppe; }
 }
