@@ -6,6 +6,6 @@ public record StudentprofilResponseDTO(
         Long stupoId,
         Integer stupoGueltigAb,
         Integer startsemester,
-        String aweVariante
+        Integer aweVariante
 ) {
 }

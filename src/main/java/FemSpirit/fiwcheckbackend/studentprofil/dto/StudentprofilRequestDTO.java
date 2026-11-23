@@ -11,6 +11,6 @@ public record StudentprofilRequestDTO(
         Integer startsemester,
 
         @NotBlank(message = "AWE-Variante darf nicht leer sein")
-        String aweVariante
+        Integer aweVariante
 ) {
 }

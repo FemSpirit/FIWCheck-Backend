@@ -24,8 +24,8 @@ public class Student extends User {
     @Column
     private Integer studiumBeginn;
 
-    @Column(length = 10)
-    private String aweVariante;
+    @Column
+    private Integer aweVariante;
 
     /*
     Der Fremdschluessel stupo_id wird von optional=false auf optional=true gesetzt, weil die Studentin nach der Registrierung
@@ -62,11 +62,11 @@ public class Student extends User {
         this.studiumBeginn = studiumBeginn;
     }
 
-    public String getAweVariante() {
+    public Integer getAweVariante() {
         return aweVariante;
     }
 
-    public void setAweVariante(String aweVariante) {
+    public void setAweVariante(Integer aweVariante) {
         this.aweVariante = aweVariante;
     }
 
