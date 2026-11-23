@@ -21,8 +21,8 @@ public class Student extends User {
     @Column
     private Boolean vollzeit;
 
-    @Column
-    private Integer studiumBeginn;
+    @Column(length = 20)
+    private String studiumBeginn;
 
     @Column
     private Integer aweVariante;
@@ -54,11 +54,11 @@ public class Student extends User {
         this.vollzeit = vollzeit;
     }
 
-    public Integer getStudiumBeginn() {
+    public String getStudiumBeginn() {
         return studiumBeginn;
     }
 
-    public void setStudiumBeginn(Integer studiumBeginn) {
+    public void setStudiumBeginn(String studiumBeginn) {
         this.studiumBeginn = studiumBeginn;
     }
 
