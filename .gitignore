@@ -33,6 +33,7 @@ replay_pid*
 
 ### DB Zugangsdaten ###
 /src/main/resources/application-local.properties
+/src/test/resources/application-test-local.properties
 
 # Maven build output
 target/
