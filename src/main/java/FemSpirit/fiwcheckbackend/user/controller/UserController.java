@@ -68,4 +68,28 @@ public class UserController {
 
         return ResponseEntity.ok(aktualisierterUser);
     }
+
+    // Ändern von Name
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> changeName(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequestDTO request) {
+
+        UserResponseDTO aktUser =
+                userService.updateUser(id, request);
+
+        return ResponseEntity.ok(aktUser);
+    }
+
+    // PAsswort ändern
+    @PutMapping("/{id}/password")
+    public ResponseEntity<UserResponseDTO> updatePassword(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequestDTO request) {
+
+        UserResponseDTO aktUser =
+                userService.updateUser(id, request);
+
+        return ResponseEntity.ok(aktUser);
+    }
 }
