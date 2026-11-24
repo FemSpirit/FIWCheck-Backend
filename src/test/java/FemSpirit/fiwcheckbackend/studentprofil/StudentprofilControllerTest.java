@@ -47,7 +47,7 @@ public class StudentprofilControllerTest {
         when(jwtUtil.getClaims(token)).thenReturn(claims);
 
         StudentprofilResponseDTO res = new StudentprofilResponseDTO(
-                "Name", email, 2L, 2024,2024, "1");
+                "Name", email, 2L, 2024,"WiSe 2025/26", 1);
         when(studentprofilService.getStudentprofil(email)).thenReturn(res);
 
 
