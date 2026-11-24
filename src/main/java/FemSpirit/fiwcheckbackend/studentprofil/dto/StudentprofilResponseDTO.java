@@ -5,7 +5,7 @@ public record StudentprofilResponseDTO(
         String email,
         Long stupoId,
         Integer stupoGueltigAb,
-        Integer startsemester,
-        String aweVariante
+        String startsemester,
+        Integer aweVariante
 ) {
 }

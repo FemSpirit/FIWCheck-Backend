@@ -8,9 +8,9 @@ public record StudentprofilRequestDTO(
         Long stupoId,
 
         @NotNull(message = "Startsemester darf nicht leer sein")
-        Integer startsemester,
+        String startsemester,
 
         @NotBlank(message = "AWE-Variante darf nicht leer sein")
-        String aweVariante
+        Integer aweVariante
 ) {
 }
