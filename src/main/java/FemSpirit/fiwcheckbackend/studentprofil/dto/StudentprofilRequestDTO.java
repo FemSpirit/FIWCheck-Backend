@@ -7,10 +7,10 @@ public record StudentprofilRequestDTO(
         @NotNull(message = "StuPO darf nicht leer sein")
         Long stupoId,
 
-        @NotNull(message = "Startsemester darf nicht leer sein")
+        @NotBlank(message = "Startsemester darf nicht leer sein")
         String startsemester,
 
-        @NotBlank(message = "AWE-Variante darf nicht leer sein")
+        @NotNull(message = "AWE-Variante darf nicht leer sein")
         Integer aweVariante
 ) {
 }
