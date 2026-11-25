@@ -16,10 +16,32 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
 
-  /*  private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    /*  private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter) {
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+      public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter) {
+          this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+      }
+
+     */
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/login").permitAll()
+                        .requestMatchers("/user/**", "/api/auth/**", "/role/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .httpBasic(httpBasic -> httpBasic.disable())
+                .formLogin(form -> form.disable());
+
+        return http.build();
     }
 
    */

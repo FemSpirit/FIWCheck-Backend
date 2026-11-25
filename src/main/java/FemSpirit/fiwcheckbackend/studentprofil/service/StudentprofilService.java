@@ -68,12 +68,12 @@ public class StudentprofilService {
         }
 
         // AWE-Variante darf nach erstmaliger Speicherung nicht mehr geändert werden
-        if (student.getAweVariante() != null && !student.getAweVariante().equals(request.aweVariante().trim())) {
+        if (student.getAweVariante() != null && !student.getAweVariante().equals(request.aweVariante())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "AWE-Variante kann nach der erstmaligen Speicherung nicht mehr geändert werden");
         }
         student.setStupo(stupo);
         student.setStudiumBeginn(request.startsemester());
-        student.setAweVariante(request.aweVariante().trim());
+        student.setAweVariante(request.aweVariante());
 
         Student gespeicherterStudent = studentRepository.save(student);
         return mapToResponseDTO(gespeicherterStudent);

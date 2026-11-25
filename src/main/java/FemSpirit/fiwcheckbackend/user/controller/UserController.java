@@ -1,7 +1,5 @@
 package FemSpirit.fiwcheckbackend.user.controller;
 
-import FemSpirit.fiwcheckbackend.auth.dto.LoginRequestDTO;
-import FemSpirit.fiwcheckbackend.auth.dto.LoginResponseDTO;
 import FemSpirit.fiwcheckbackend.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import FemSpirit.fiwcheckbackend.user.dto.*;
@@ -43,12 +41,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(registrierterStudent);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login( @Valid @RequestBody LoginRequestDTO request) {
-        LoginResponseDTO einloggen = userService.login(request);
-        return ResponseEntity.ok(einloggen);
-    }
-
 
     //DELETE/user/{id}
     @DeleteMapping("/{id}")
@@ -67,5 +59,29 @@ public class UserController {
                 userService.updateUser(id, request);
 
         return ResponseEntity.ok(aktualisierterUser);
+    }
+
+    // Ändern von Name
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> changeName(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequestDTO request) {
+
+        UserResponseDTO aktUser =
+                userService.updateUser(id, request);
+
+        return ResponseEntity.ok(aktUser);
+    }
+
+    // PAsswort ändern
+    @PutMapping("/{id}/password")
+    public ResponseEntity<UserResponseDTO> updatePassword(
+            @PathVariable Long id,
+            @Valid @RequestBody UserUpdateRequestDTO request) {
+
+        UserResponseDTO aktUser =
+                userService.updateUser(id, request);
+
+        return ResponseEntity.ok(aktUser);
     }
 }
