@@ -23,6 +23,7 @@ public class SecurityConfiguration {
       }
 
      */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -31,8 +32,9 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers("/user/**", "/api/auth/**", "/role/**").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
@@ -42,27 +44,5 @@ public class SecurityConfiguration {
                 .formLogin(form -> form.disable());
 
         return http.build();
-    }
-
-   */
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-      http
-              .csrf(csrf -> csrf.disable())
-              .cors(Customizer.withDefaults())
-              .authorizeHttpRequests(auth -> auth
-                      .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                      .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
-                      .requestMatchers("/user/**", "/api/auth/**", "/role/**").permitAll()
-                      .requestMatchers("/error").permitAll()
-                      .anyRequest().authenticated()
-              )
-              .sessionManagement(session -> session
-                      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-              )
-              .httpBasic(httpBasic -> httpBasic.disable())
-              .formLogin(form -> form.disable());
-
-      return http.build();
     }
 }
