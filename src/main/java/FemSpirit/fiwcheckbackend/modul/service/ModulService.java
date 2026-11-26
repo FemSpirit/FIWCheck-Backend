@@ -40,24 +40,31 @@ public class ModulService {
     }
 
 
-    private ModulResponseDTO mapToDTO(Modul module) {
+    private ModulResponseDTO mapToDTO(Modul modul) {
+        // Ternärer Operator: Hat das Modul eine Fachgruppe (ist modul.getFachgruppe() nicht null)?
+        String fachgruppeBezeichnung = modul.getFachgruppe() != null
+                // Wenn ja: Bezeichnung auslesen und in die Variable schreiben
+                ? modul.getFachgruppe().getFachgruppeBezeichnung()
+                // Wenn nein (z. B. Wahlpflichtmodul): null verwenden
+                : null;
+
         return new ModulResponseDTO(
-                module.getModulId(),
-                module.getModulnummer(),
-                module.getBezeichnung(),
-                module.getBeschreibung(),
-                module.getEcts(),
-                module.getForm(),
-                module.getSws(),
-                module.getPflichtart(),
-                module.getAngebotssemester(),
-                module.getEmpfohlenesSemester(),
-                module.getFliesstInModulgruppennote(),
-                module.getZeugnisrelevant(),
-                module.getGesamtnotenrelevant(),
-                module.getFachgruppe(),
-                module.getRasterGroesseVz(),
-                module.getStupo(),
-                module.getModulgruppe()
+                modul.getModulId(),
+                modul.getModulnummer(),
+                modul.getBezeichnung(),
+                modul.getBeschreibung(),
+                modul.getEcts(),
+                modul.getForm(),
+                modul.getSws(),
+                modul.getPflichtart(),
+                modul.getAngebotssemester(),
+                modul.getEmpfohlenesSemester(),
+                modul.getFliesstInModulgruppennote(),
+                modul.getZeugnisrelevant(),
+                modul.getGesamtnotenrelevant(),
+                fachgruppeBezeichnung,
+                modul.getRasterGroesseVz(),
+                modul.getStupo(),
+                modul.getModulgruppe()
         );
     }}
