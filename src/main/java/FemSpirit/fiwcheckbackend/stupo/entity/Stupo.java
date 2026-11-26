@@ -20,10 +20,6 @@ public class Stupo {
         return stupoId;
     }
 
-    public void setStupoId(Long stupoId) {
-        this.stupoId = stupoId;
-    }
-
     public Integer getGueltigAb() {
         return gueltigAb;
     }
