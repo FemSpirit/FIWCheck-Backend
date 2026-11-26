@@ -3,7 +3,7 @@ package FemSpirit.fiwcheckbackend.studentprofil.service;
 import FemSpirit.fiwcheckbackend.studentprofil.dto.StudentprofilRequestDTO;
 import FemSpirit.fiwcheckbackend.studentprofil.dto.StudentprofilResponseDTO;
 import FemSpirit.fiwcheckbackend.stupo.entity.Stupo;
-import FemSpirit.fiwcheckbackend.stupo.entity.StupoRepository;
+import FemSpirit.fiwcheckbackend.stupo.repository.StupoRepository;
 import FemSpirit.fiwcheckbackend.user.entity.Student;
 import FemSpirit.fiwcheckbackend.user.repository.StudentRepository;
 import org.springframework.http.HttpStatus;
