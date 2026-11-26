@@ -35,6 +35,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers("/user/**", "/api/auth/**", "/role/**").permitAll()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/studentprofil").permitAll()
+
+                        .requestMatchers(HttpMethod.PUT, "/studentprofil/studieninformationen").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
