@@ -1,5 +1,6 @@
 package FemSpirit.fiwcheckbackend.modul.entity;
 
+import FemSpirit.fiwcheckbackend.stupo.entity.Fachgruppe;
 import FemSpirit.fiwcheckbackend.stupo.entity.Modulgruppe;
 import FemSpirit.fiwcheckbackend.stupo.entity.Stupo;
 import jakarta.persistence.*;
@@ -51,9 +52,6 @@ public class Modul {
     @Column (nullable = false)
     private Boolean gesamtnotenrelevant;
 
-    @Column(length= 20,nullable = false)
-    private String fachgruppe;
-
     @Column(nullable = true, precision = 2, scale = 1, columnDefinition = "NUMERIC(2,1) " +
             "DEFAULT 1.0 CHECK (raster_groesse_vz IS NULL OR raster_groesse_vz IN (0.5, 1.0, 2.0, 4.0))")
     private BigDecimal rasterGroesseVz = new BigDecimal("1.0");
@@ -61,6 +59,10 @@ public class Modul {
     @ManyToOne(optional = false)
     @JoinColumn(name = "stupo_id", nullable = false)
     private Stupo stupo;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "fachgruppe_id", nullable = true)
+    private Fachgruppe fachgruppe;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "modulgruppe_id", nullable = false)
@@ -70,8 +72,6 @@ public class Modul {
     }
 
     public Long getModulId() { return modulId; }
-
-    public void setModulId(Long modulId) { this.modulId = modulId; }
 
     public String getModulnummer() { return modulnummer; }
 
@@ -97,7 +97,7 @@ public class Modul {
 
     public void setSws(String sws) { this.sws = sws; }
 
-    public boolean getPflichtart() { return pflichtart; }
+    public Boolean getPflichtart() { return pflichtart; }
 
     public void setPflichtart(Boolean pflichtart) { this.pflichtart = pflichtart; }
 
@@ -124,10 +124,6 @@ public class Modul {
     public void setGesamtnotenrelevant(Boolean gesamtnotenrelevant)
         { this.gesamtnotenrelevant = gesamtnotenrelevant; }
 
-    public String getFachgruppe() { return fachgruppe; }
-
-    public void setFachgruppe(String fachgruppe) { this.fachgruppe = fachgruppe; }
-
     public BigDecimal getRasterGroesseVz() { return rasterGroesseVz; }
 
     public void setRasterGroesseVz(BigDecimal rasterGroesseVz) { this.rasterGroesseVz = rasterGroesseVz; }
@@ -135,6 +131,16 @@ public class Modul {
     public Stupo getStupo() { return stupo; }
 
     public void setStupo(Stupo stupo) { this.stupo = stupo; }
+
+    public Fachgruppe getFachgruppe()
+    {
+        return fachgruppe;
+    }
+
+    public void setFachgruppe(Fachgruppe fachgruppe)
+    {
+        this.fachgruppe = fachgruppe;
+    }
 
     public Modulgruppe getModulgruppe() { return modulgruppe; }
 
