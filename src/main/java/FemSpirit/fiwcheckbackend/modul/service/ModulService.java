@@ -39,7 +39,14 @@ public class ModulService {
         return mapToDTO(modul);
     }
 
-
+    /**
+     * Wandelt eine {@link Modul}-Entity in ein {@link ModulResponseDTO} um.
+     * Falls eine {@code Fachgruppe} gesetzt ist, wird deren Bezeichnung übernommen;
+     * ohne zugeordnete Fachgruppe bleibt {@code fachgruppeBezeichnung} {@code null}.
+     *
+     * @param modul das umzuwandelnde Modul
+     * @return das erzeugte {@link ModulResponseDTO}
+     */
     private ModulResponseDTO mapToDTO(Modul modul) {
         // Ternärer Operator: Hat das Modul eine Fachgruppe (ist modul.getFachgruppe() nicht null)?
         String fachgruppeBezeichnung = modul.getFachgruppe() != null

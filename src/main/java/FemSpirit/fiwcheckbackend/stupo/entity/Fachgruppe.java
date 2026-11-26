@@ -4,6 +4,11 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "fachgruppe")
+/**
+ * Repräsentiert eine fachliche Gruppe (z. B. Informatik oder Wirtschaft),
+ * der Module zugeordnet werden können (etwa für Farbcodierung und Legende
+ * in der Modulübersicht).
+ */
 public class Fachgruppe
 {
     @Id
@@ -11,7 +16,7 @@ public class Fachgruppe
     @Column(name = "fachgruppe_id")
     private long fachgruppeId;
 
-    @Column(name = "fachgruppe_bezeichnung", length = 20)
+    @Column(name = "fachgruppe_bezeichnung", length = 20, unique = true)
     private String fachgruppeBezeichnung;
 
     public Fachgruppe()
