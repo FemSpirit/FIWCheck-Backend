@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
 import java.util.List;
 
 @RestController
@@ -16,8 +17,10 @@ public class UserController {
 
     private final UserService userService;
 
+
     public UserController(UserService userService) {
         this.userService = userService;
+
     }
 
     // 1. GET /user/{id} - Einzelnen User anhand der ID abrufen
@@ -84,4 +87,5 @@ public class UserController {
 
         return ResponseEntity.ok(aktUser);
     }
+
 }
