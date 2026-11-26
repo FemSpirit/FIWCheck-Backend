@@ -19,7 +19,7 @@ public record ModulResponseDTO(
         Integer fliesstInModulgruppennote,
         Boolean zeugnisrelevant,
         Boolean gesamtnotenrelevant,
-        String fachgruppe,
+        String fachgruppeBezeichnung,  // Für Legende & Farbcodierung im Frontend (Modulübersicht > Alle Module)
         BigDecimal rasterGroesseVz,
         Stupo stupo,
         Modulgruppe modulgruppe
