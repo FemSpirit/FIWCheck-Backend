@@ -6,7 +6,8 @@ import FemSpirit.fiwcheckbackend.user.repository.UserRepository;
 import FemSpirit.fiwcheckbackend.user.repository.StudentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import FemSpirit.fiwcheckbackend.role.repository.RoleRepository;
 import FemSpirit.fiwcheckbackend.role.entity.Role;
@@ -26,15 +27,17 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
 
+
     // Der EntityManager wurde entfernt, da er nicht mehr benötigt wird
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
-                       StudentRepository studentRepository){
+                       StudentRepository studentRepository) {
         this.userRepository = userRepository;
         this.studentRepository = studentRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+
     }
 
     // Prüft, ob die angegebene E-Mail-Adresse eine erlaubte HTW-Domain besitzt
@@ -126,10 +129,42 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Prüft, ob der authentifizierte Benutzer auf sein
+     * eigenes Benutzerkonto zugreift.
+     *
+     * @param id die ID des angefragten Benutzers
+     * @throws ResponseStatusException bei fehlender Berechtigung
+     */
+    private void checkUserPermission(Long id) {
+
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null
+                || !authentication.isAuthenticated()
+                || !(authentication.getPrincipal() instanceof Long)) {
+
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED,
+                    "Benutzer ist nicht authentifiziert"
+            );
+        }
+
+        Long authenticatedUserId = (Long) authentication.getPrincipal();
+
+        if (!authenticatedUserId.equals(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN,
+                    "Kein Zugriff auf fremde Benutzerkonten"
+            );
+        }
+    }
     // name oder passwort akktualisieren
     @Transactional
     public UserResponseDTO updateUser(Long id, UserUpdateRequestDTO request) {
 
+        checkUserPermission(id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
@@ -158,11 +193,11 @@ public class UserService {
     //User anhand id loeschen
     @Transactional
     public void deleteUser(Long id) {
+        checkUserPermission(id);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User mit der ID " + id + " wurde nicht gefunden."));
 
         userRepository.delete(user);
     }
-
 
 }
