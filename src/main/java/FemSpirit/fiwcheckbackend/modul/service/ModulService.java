@@ -39,25 +39,39 @@ public class ModulService {
         return mapToDTO(modul);
     }
 
+    /**
+     * Wandelt eine {@link Modul}-Entity in ein {@link ModulResponseDTO} um.
+     * Falls eine {@code Fachgruppe} gesetzt ist, wird deren Bezeichnung übernommen;
+     * ohne zugeordnete Fachgruppe bleibt {@code fachgruppeBezeichnung} {@code null}.
+     *
+     * @param modul das umzuwandelnde Modul
+     * @return das erzeugte {@link ModulResponseDTO}
+     */
+    private ModulResponseDTO mapToDTO(Modul modul) {
+        // Ternärer Operator: Hat das Modul eine Fachgruppe (ist modul.getFachgruppe() nicht null)?
+        String fachgruppeBezeichnung = modul.getFachgruppe() != null
+                // Wenn ja: Bezeichnung auslesen und in die Variable schreiben
+                ? modul.getFachgruppe().getFachgruppeBezeichnung()
+                // Wenn nein (z. B. Wahlpflichtmodul): null verwenden
+                : null;
 
-    private ModulResponseDTO mapToDTO(Modul module) {
         return new ModulResponseDTO(
-                module.getModulId(),
-                module.getModulnummer(),
-                module.getBezeichnung(),
-                module.getBeschreibung(),
-                module.getEcts(),
-                module.getForm(),
-                module.getSws(),
-                module.getPflichtart(),
-                module.getAngebotssemester(),
-                module.getEmpfohlenesSemester(),
-                module.getFliesstInModulgruppennote(),
-                module.getZeugnisrelevant(),
-                module.getGesamtnotenrelevant(),
-                module.getFachgruppe(),
-                module.getRasterGroesseVz(),
-                module.getStupo(),
-                module.getModulgruppe()
+                modul.getModulId(),
+                modul.getModulnummer(),
+                modul.getBezeichnung(),
+                modul.getBeschreibung(),
+                modul.getEcts(),
+                modul.getForm(),
+                modul.getSws(),
+                modul.getPflichtart(),
+                modul.getAngebotssemester(),
+                modul.getEmpfohlenesSemester(),
+                modul.getFliesstInModulgruppennote(),
+                modul.getZeugnisrelevant(),
+                modul.getGesamtnotenrelevant(),
+                fachgruppeBezeichnung,
+                modul.getRasterGroesseVz(),
+                modul.getStupo(),
+                modul.getModulgruppe()
         );
     }}

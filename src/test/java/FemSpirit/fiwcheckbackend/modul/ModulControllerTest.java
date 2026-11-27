@@ -44,24 +44,19 @@ class ModulControllerTest
     void setUpTestdata() {
 
             Stupo ersteStupo = new Stupo();
-            ersteStupo.setStupoId(1L);          // falls der Setter so heißt (sonst per Autovervollständigung prüfen)
-            ersteStupo.setGueltigAb(2024);      // Beispiel für ein weiteres Feld, falls im Test gebraucht
+            ersteStupo.setGueltigAb(2024);
 
             Modulgruppe ersteModulgruppe = new Modulgruppe();
-            ersteModulgruppe.setModulgruppeId(1L); // falls der Setter so heißt
             ersteModulgruppe.setBezeichnung("Pflichtbereich");
 
-        standardModul = new ModulResponseDTO(
-                1L,"B32","Software Engineering 2", "Beschreibung",
+        standardModul = new ModulResponseDTO(1L,"B32","Software Engineering 2", "Beschreibung",
                 5, "2/2", "4/2", true,"WiSe", 3,
                 50, true, false,
                 "Informatik", BigDecimal.valueOf(1.0), ersteStupo, ersteModulgruppe
         );
             Stupo zweiteStupo = new Stupo();
-            zweiteStupo.setStupoId(1L);
 
             Modulgruppe zweiteModulgruppe = new Modulgruppe();
-            zweiteModulgruppe.setModulgruppeId(2L);
             zweiteModulgruppe.setBezeichnung("Wahlpflichtbereich");
 
         zweitesModul = new ModulResponseDTO(
@@ -89,7 +84,8 @@ class ModulControllerTest
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].bezeichnung").value(standardModul.bezeichnung()));
+                .andExpect(jsonPath("$[0].bezeichnung").value(standardModul.bezeichnung()))
+                .andExpect(jsonPath("$[0].fachgruppeBezeichnung").value("Informatik"));
     }
 
     @Test
@@ -127,7 +123,8 @@ class ModulControllerTest
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.modulId").value(standardModul.modulId()))
-                .andExpect(jsonPath("$.bezeichnung").value(standardModul.bezeichnung()));
+                .andExpect(jsonPath("$.bezeichnung").value(standardModul.bezeichnung()))
+                .andExpect(jsonPath("$.fachgruppeBezeichnung").value("Informatik"));
     }
 
     @Test
